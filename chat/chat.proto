@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message chatMessage {
+string message = 1;
+}
+
+message timeStamp{
+    {}
+}
+
+service Publish{
+   rpc getMessage (chatMessageRequest) returns (chatMessage);
+}
+
