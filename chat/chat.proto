@@ -1,12 +1,14 @@
 syntax = "proto3";
 
+package main;
+option go_package = "https://github.com/Troelshjarne/mini_project_2;main";
+
 message chatMessage {
 string message = 1;
+repeated int32 vectorTime = 2;
 }
 
-message timeStamp{
-    {}
-}
+message chatMessageRequest {}
 
 service Publish{
    rpc getMessage (chatMessageRequest) returns (chatMessage);
