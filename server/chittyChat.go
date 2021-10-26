@@ -13,6 +13,7 @@ import (
 
 type Server struct {
 	chatpackage.UnimplementedPublishServer
+	messages []chatpackage.ChatMessage
 }
 
 func (s *Server) GetMessage(ctx context.Context, in *chatpackage.ChatMessageRequest) (*chatpackage.ChatMessage, error) {

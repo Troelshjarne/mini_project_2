@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PublishClient interface {
-	GetMessage(ctx context.Context, in *ChatMessageRequest, opts ...grpc.CallOption) (*ChatMessage, error)
+	GetMessage(ctx context.Context, opts ...grpc.CallOption) (Publish_GetMessageClient, error)
 }
 
 type publishClient struct {
@@ -29,20 +29,42 @@ func NewPublishClient(cc grpc.ClientConnInterface) PublishClient {
 	return &publishClient{cc}
 }
 
-func (c *publishClient) GetMessage(ctx context.Context, in *ChatMessageRequest, opts ...grpc.CallOption) (*ChatMessage, error) {
-	out := new(ChatMessage)
-	err := c.cc.Invoke(ctx, "/chatpackage.Publish/getMessage", in, out, opts...)
+func (c *publishClient) GetMessage(ctx context.Context, opts ...grpc.CallOption) (Publish_GetMessageClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Publish_ServiceDesc.Streams[0], "/chatpackage.Publish/getMessage", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &publishGetMessageClient{stream}
+	return x, nil
+}
+
+type Publish_GetMessageClient interface {
+	Send(*ChatMessage) error
+	Recv() (*ChatMessage, error)
+	grpc.ClientStream
+}
+
+type publishGetMessageClient struct {
+	grpc.ClientStream
+}
+
+func (x *publishGetMessageClient) Send(m *ChatMessage) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *publishGetMessageClient) Recv() (*ChatMessage, error) {
+	m := new(ChatMessage)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // PublishServer is the server API for Publish service.
 // All implementations must embed UnimplementedPublishServer
 // for forward compatibility
 type PublishServer interface {
-	GetMessage(context.Context, *ChatMessageRequest) (*ChatMessage, error)
+	GetMessage(Publish_GetMessageServer) error
 	mustEmbedUnimplementedPublishServer()
 }
 
@@ -50,8 +72,8 @@ type PublishServer interface {
 type UnimplementedPublishServer struct {
 }
 
-func (UnimplementedPublishServer) GetMessage(context.Context, *ChatMessageRequest) (*ChatMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMessage not implemented")
+func (UnimplementedPublishServer) GetMessage(Publish_GetMessageServer) error {
+	return status.Errorf(codes.Unimplemented, "method GetMessage not implemented")
 }
 func (UnimplementedPublishServer) mustEmbedUnimplementedPublishServer() {}
 
@@ -66,22 +88,30 @@ func RegisterPublishServer(s grpc.ServiceRegistrar, srv PublishServer) {
 	s.RegisterService(&Publish_ServiceDesc, srv)
 }
 
-func _Publish_GetMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChatMessageRequest)
-	if err := dec(in); err != nil {
+func _Publish_GetMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(PublishServer).GetMessage(&publishGetMessageServer{stream})
+}
+
+type Publish_GetMessageServer interface {
+	Send(*ChatMessage) error
+	Recv() (*ChatMessage, error)
+	grpc.ServerStream
+}
+
+type publishGetMessageServer struct {
+	grpc.ServerStream
+}
+
+func (x *publishGetMessageServer) Send(m *ChatMessage) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *publishGetMessageServer) Recv() (*ChatMessage, error) {
+	m := new(ChatMessage)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(PublishServer).GetMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/chatpackage.Publish/getMessage",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PublishServer).GetMessage(ctx, req.(*ChatMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return m, nil
 }
 
 // Publish_ServiceDesc is the grpc.ServiceDesc for Publish service.
@@ -90,12 +120,14 @@ func _Publish_GetMessage_Handler(srv interface{}, ctx context.Context, dec func(
 var Publish_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "chatpackage.Publish",
 	HandlerType: (*PublishServer)(nil),
-	Methods: []grpc.MethodDesc{
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
 		{
-			MethodName: "getMessage",
-			Handler:    _Publish_GetMessage_Handler,
+			StreamName:    "getMessage",
+			Handler:       _Publish_GetMessage_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
 	Metadata: "chat/chat.proto",
 }

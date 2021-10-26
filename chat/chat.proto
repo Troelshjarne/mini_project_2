@@ -8,8 +8,8 @@ string message = 1;
 repeated int32 vectorTime = 2;
 }
 
-message chatMessageRequest {}
+
 
 service Publish{
-   rpc getMessage (chatMessageRequest) returns (chatMessage);
+   rpc getMessage (stream chatMessage) returns (stream chatMessage);
 }
