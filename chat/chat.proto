@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package main;
-option go_package = "https://github.com/Troelshjarne/mini_project_2;main";
+package chatpackage;
+option go_package = "https://github.com/Troelshjarne/mini_project_2;chatpackage";
 
 message chatMessage {
 string message = 1;
