@@ -13,4 +13,3 @@ message chatMessageRequest {}
 service Publish{
    rpc getMessage (chatMessageRequest) returns (chatMessage);
 }
-

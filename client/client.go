@@ -1,8 +1,13 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
+
+	t "time"
+
+	chatpackage "github.com/Troelshjarne/mini_project_2/chat"
 
 	"google.golang.org/grpc"
 )
@@ -21,5 +26,24 @@ func main() {
 	defer conn.Close()
 
 	//  Create new Client from generated gRPC code from proto
+	c := chatpackage.NewPublishClient(conn)
+
+	for {
+		SendGetMsgRequest(c)
+		t.Sleep(5 * t.Second)
+	}
+
+}
+
+func SendGetMsgRequest(c chatpackage.PublishClient) {
+
+	messageExample := chatpackage.ChatMessageRequest{}
+
+	response, err := c.GetMessage(context.Background(), &messageExample)
+	if err != nil {
+		log.Fatalf("Error when calling GetMessage: %s", err)
+	}
+
+	fmt.Printf("The current message is: %s\n", response.Message)
 
 }
