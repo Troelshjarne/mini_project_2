@@ -18,7 +18,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommunicationClient interface {
+	// rename publish
 	JoinChannel(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_JoinChannelClient, error)
+	//rename broadcast
 	SendMessage(ctx context.Context, opts ...grpc.CallOption) (Communication_SendMessageClient, error)
 }
 
@@ -100,7 +102,9 @@ func (x *communicationSendMessageClient) CloseAndRecv() (*MessageAck, error) {
 // All implementations must embed UnimplementedCommunicationServer
 // for forward compatibility
 type CommunicationServer interface {
+	// rename publish
 	JoinChannel(*Channel, Communication_JoinChannelServer) error
+	//rename broadcast
 	SendMessage(Communication_SendMessageServer) error
 	mustEmbedUnimplementedCommunicationServer()
 }

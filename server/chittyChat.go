@@ -25,11 +25,14 @@ func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Comm
 	//Joining information is stored in the channel map.
 	s.channel[ch.Name] = append(s.channel[ch.Name], msgChannel)
 
+	// keeping the stream open
 	for {
 
 		select {
 		//If the channel is closed, this case is chosen.
 		case <-msgStream.Context().Done():
+			log.Print(ch.SendersID + " " + "is gooone bby")
+			//msgStream.Send(&msg)
 			return nil
 		//If the server is running, messages are recieved through this channel.
 		case msg := <-msgChannel:

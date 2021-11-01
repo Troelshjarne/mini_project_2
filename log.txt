@@ -1,0 +1,26 @@
+2021/11/01 12:02:05 client.go:72: Logging to custom file
+2021/11/01 12:02:12 client.go:72: Logging to custom file
+2021/11/01 12:02:16 client.go:91: Message: (tdawg) -> hej 
+2021/11/01 12:02:41 client.go:91: Message: (Dulal) -> hello 
+2021/11/01 12:07:52 client.go:86: Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 12:07:52 client.go:86: Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 12:08:33 client.go:74: Logging to custom file
+2021/11/01 12:08:38 client.go:74: Logging to custom file
+2021/11/01 12:08:43 client.go:93: Message: (tdawg) -> hello 
+2021/11/01 12:08:52 client.go:93: Message: (Dulal) -> hej 
+2021/11/01 12:10:16 client.go:93: Message: (tdawg) -> hej Troels 
+2021/11/01 12:32:07 client.go:88: Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 12:32:07 client.go:88: Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 12:32:20 client.go:74: Logging to custom file
+2021/11/01 12:32:25 client.go:74: Logging to custom file
+2021/11/01 12:32:30 client.go:93: Message: (tdawg) -> hej 
+2021/11/01 12:34:49 client.go:88: Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 12:34:57 client.go:74: Logging to custom file
+2021/11/01 12:35:01 client.go:74: Logging to custom file
+2021/11/01 12:56:55 client.go:88: Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF

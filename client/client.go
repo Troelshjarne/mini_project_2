@@ -68,11 +68,6 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 
 	log.SetOutput(mw)
 
-	// optional: log date-time, filename, and line number
-	log.SetFlags(log.Lshortfile | log.LstdFlags)
-
-	log.Println("Logging to custom file")
-
 	waitChannel := make(chan struct{})
 
 	go func() {
@@ -105,7 +100,7 @@ func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, me
 	if err != nil {
 		log.Printf("Fail sending message! Got error: %v", err)
 	}
-
+	// include timestamp.
 	msg := chatpackage.ChatMessage{
 		Channel: &chatpackage.Channel{
 			Name:      *channelName,
