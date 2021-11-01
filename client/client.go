@@ -14,6 +14,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+var lamTime = 0
 var channelName = flag.String("channel", "default", "Channel name for chatting")
 var senderName = flag.String("sender", "default", "Senders name")
 var tcpServer = flag.String("server", ":9080", "Tcp server")
@@ -84,8 +85,9 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 			}
 
 			if *senderName != in.ParticipantID {
-				// log message
-				log.Printf("Message: (%v) -> %v \n", in.ParticipantID, in.Message)
+				//
+				lamTime += int(in.LamTime) + 1
+				log.Printf("Time: (%v) Message: (%v) -> %v \n", lamTime, in.ParticipantID, in.Message)
 			}
 
 		}

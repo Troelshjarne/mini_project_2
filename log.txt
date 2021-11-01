@@ -24,3 +24,11 @@
 2021/11/01 12:35:01 client.go:74: Logging to custom file
 2021/11/01 12:56:55 client.go:88: Failed to recieve message from channel joining. 
  Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:27:05 Time: (1) Message: (tdawg) -> hej 
+2021/11/01 13:27:25 Time: (1) Message: (Dulal) -> hehj 
+2021/11/01 13:27:30 Time: (1) Message: (tdawg) -> hej 
+2021/11/01 13:28:29 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:28:41 Time: (1) Message: (tdawg) -> hej 
+2021/11/01 13:28:42 Time: (2) Message: (tdawg) -> hej 
+2021/11/01 13:28:50 Time: (1) Message: (Dulal) -> hej 
