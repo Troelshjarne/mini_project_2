@@ -11,6 +11,8 @@ import (
 	"google.golang.org/grpc"
 )
 
+var serverlamtime = 0
+
 type Server struct {
 	chatpackage.UnimplementedCommunicationServer
 
@@ -36,7 +38,9 @@ func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Comm
 			return nil
 		//If the server is running, messages are recieved through this channel.
 		case msg := <-msgChannel:
-			fmt.Printf("Recieved message: %v at timestamp T \n", msg)
+			serverlamtime += int(msg.LamTime) + 1
+			msg.LamTime = int32(serverlamtime)
+			fmt.Printf("Recieved message: %v at timestamp %v \n", msg, serverlamtime)
 			msgStream.Send(msg)
 		}
 	}

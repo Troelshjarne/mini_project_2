@@ -32,3 +32,19 @@
 2021/11/01 13:28:41 Time: (1) Message: (tdawg) -> hej 
 2021/11/01 13:28:42 Time: (2) Message: (tdawg) -> hej 
 2021/11/01 13:28:50 Time: (1) Message: (Dulal) -> hej 
+2021/11/01 13:35:08 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:35:08 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:35:23 Time: (1) Message: (tdawg) -> hej 
+2021/11/01 13:38:33 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:38:33 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:39:17 Time: (4) Message: (tdawg) -> hej 
+2021/11/01 13:40:22 Time: (14) Message: (tdawg) -> ih 
+2021/11/01 13:41:23 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:41:23 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/01 13:41:36 Time: (1) Message: (tdawg) -> ty 
