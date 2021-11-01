@@ -1,49 +1,101 @@
 package main
 
 import (
+	"bufio"
 	"context"
+	"flag"
 	"fmt"
+	"io"
 	"log"
-
-	t "time"
+	"os"
 
 	chatpackage "github.com/Troelshjarne/mini_project_2/chat"
 
 	"google.golang.org/grpc"
 )
 
+var channelName = flag.String("channel", "default", "Channel name for chatting")
+var senderName = flag.String("sender", "default", "Senders name")
+var tcpServer = flag.String("server", ":9080", "Tcp server")
+
 func main() {
-	// Creat a virtual RPC Client Connection on port  9080 WithInsecure (because  of http)
-	var conn *grpc.ClientConn
-	conn, err := grpc.Dial(":9080", grpc.WithInsecure())
+
+	flag.Parse()
+
+	fmt.Println("=== Welcome to Chitty Chat - Beta 0.1.2 ===")
+	var options []grpc.DialOption
+	options = append(options, grpc.WithBlock(), grpc.WithInsecure())
+
+	conn, err := grpc.Dial(*tcpServer, options...)
 	if err != nil {
-		log.Fatalf("Could not connect: %s", err)
-	} else {
-		fmt.Print("we are live!")
+		log.Fatalf("Failed to dial: %v", err)
 	}
 
-	// Defer means: When this function returns, call this method (meaing, one main is done, close connection)
 	defer conn.Close()
 
-	//  Create new Client from generated gRPC code from proto
-	c := chatpackage.NewPublishClient(conn)
+	ctx := context.Background()
+	client := chatpackage.NewCommunicationClient(conn)
 
-	for {
-		SendGetMsgRequest(c)
-		t.Sleep(5 * t.Second)
+	go joinChannel(ctx, client)
+
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for scanner.Scan() {
+		go sendMessage(ctx, client, scanner.Text())
 	}
 
 }
 
-func SendGetMsgRequest(c chatpackage.PublishClient) {
+func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 
-	messageExample := chatpackage.ChatMessageRequest{}
-
-	response, err := c.GetMessage(context.Background(), &messageExample)
+	channel := chatpackage.Channel{Name: *channelName, SendersID: *senderName}
+	stream, err := client.JoinChannel(ctx, &channel)
 	if err != nil {
-		log.Fatalf("Error when calling GetMessage: %s", err)
+		log.Fatalf("Client join channel error! Throws %v", err)
 	}
 
-	fmt.Printf("The current message is: %s\n", response.Message)
+	fmt.Printf("Joined channel: %v \n", *channelName)
 
+	waitChannel := make(chan struct{})
+
+	go func() {
+		for {
+
+			in, err := stream.Recv()
+			if err == io.EOF {
+				close(waitChannel)
+				return
+			}
+			if err != nil {
+				log.Fatalf("Failed to recieve message from channel joining. \n Got error: %v", err)
+			}
+
+			if *senderName != in.ParticipantID {
+				fmt.Printf("Message: (%v) -> %v \n", in.ParticipantID, in.Message)
+			}
+
+		}
+	}()
+
+	<-waitChannel
+
+}
+
+func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, message string) {
+	stream, err := client.SendMessage(ctx)
+	if err != nil {
+		log.Printf("Fail sending message! Got error: %v", err)
+	}
+
+	msg := chatpackage.ChatMessage{
+		Channel: &chatpackage.Channel{
+			Name:      *channelName,
+			SendersID: *senderName},
+		Message:       message,
+		ParticipantID: *senderName,
+	}
+	stream.Send(&msg)
+
+	ack, err := stream.CloseAndRecv()
+	fmt.Printf("Message sent: %v \n", ack)
 }

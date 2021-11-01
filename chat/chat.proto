@@ -4,12 +4,23 @@ package chatpackage;
 option go_package = "https://github.com/Troelshjarne/mini_project_2;chatpackage";
 
 message chatMessage {
-string message = 1;
-repeated int32 vectorTime = 2;
+   string message = 1;
+   string participantID = 2;
+   Channel channel = 3;
+   repeated int32 vectorTime = 4;
+}
+
+message Channel {
+   string name = 1;
+   string sendersID = 2;
+}
+
+message messageAck {
+   string status = 1;
 }
 
 
-
-service Publish{
-   rpc getMessage (stream chatMessage) returns (stream chatMessage);
+service Communication{
+   rpc joinChannel(Channel) returns (stream chatMessage) {}
+   rpc sendMessage (stream chatMessage) returns (messageAck) {}
 }
