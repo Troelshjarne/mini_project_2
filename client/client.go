@@ -42,7 +42,7 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	// check for string length!!!!!
 	for scanner.Scan() {
-		go sendMessage(ctx, client, scanner.Text())
+		go sendMessage(ctx, client, scanner.Text(), int32(lamTime))
 	}
 
 }
@@ -85,8 +85,10 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 			}
 
 			if *senderName != in.ParticipantID {
-				//
-				lamTime += int(in.LamTime) + 1
+
+				lamTime += 1
+				in.LamTime = int32(lamTime)
+
 				log.Printf("Time: (%v) Message: (%v) -> %v \n", lamTime, in.ParticipantID, in.Message)
 			}
 
@@ -97,7 +99,7 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 
 }
 
-func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, message string) {
+func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
 	stream, err := client.SendMessage(ctx)
 	if err != nil {
 		log.Printf("Fail sending message! Got error: %v", err)
@@ -109,6 +111,7 @@ func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, me
 			SendersID: *senderName},
 		Message:       message,
 		ParticipantID: *senderName,
+		LamTime:       lamtime,
 	}
 	stream.Send(&msg)
 

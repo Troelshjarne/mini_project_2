@@ -48,3 +48,177 @@
 2021/11/01 13:41:23 Failed to recieve message from channel joining. 
  Got error: rpc error: code = Unavailable desc = error reading from server: EOF
 2021/11/01 13:41:36 Time: (1) Message: (tdawg) -> ty 
+2021/11/01 13:55:56 Time: (8) Message: (John) -> hi 
+2021/11/01 13:56:03 Time: (26) Message: (John) -> hi 
+2021/11/01 13:56:09 Time: (64) Message: (John) -> hi 
+2021/11/01 13:56:14 Time: (142) Message: (John) -> hi 
+2021/11/01 13:56:14 Time: (300) Message: (John) -> hi 
+2021/11/01 13:56:15 Time: (618) Message: (John) -> hi 
+2021/11/01 13:57:10 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62433->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 13:57:10 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62440->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 13:57:29 Time: (4) Message: (John) -> hi 
+2021/11/01 13:57:31 Time: (10) Message: (John) -> hi 
+2021/11/01 13:57:38 Time: (22) Message: (John) -> hi 
+2021/11/01 13:57:44 Time: (46) Message: (John) -> hi 
+2021/11/01 13:58:22 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62445->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 13:58:22 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62446->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 13:58:41 Time: (3) Message: (John) -> hi 
+2021/11/01 13:58:42 Time: (3) Message: (John) -> hi 
+2021/11/01 13:58:47 Time: (3) Message: (John) -> hi 
+2021/11/01 13:58:48 Time: (3) Message: (John) -> hi 
+2021/11/01 13:58:51 Time: (3) Message: (Erik) -> hi 
+2021/11/01 13:58:52 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:02:48 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62457->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:02:48 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62455->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:03:07 Time: (5) Message: (Erik) -> hi 
+2021/11/01 14:03:08 Time: (5) Message: (Erik) -> hi 
+2021/11/01 14:03:19 Time: (5) Message: (Erik) -> hi 
+2021/11/01 14:03:31 Time: (5) Message: (Erik) -> hi 
+2021/11/01 14:05:07 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62473->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:05:07 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62474->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:07:15 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62486->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:10:41 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:62495->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:11:14 Time: (1) Message: (John) -> hi 
+2021/11/01 14:11:19 Time: (2) Message: (John) -> hi 
+2021/11/01 14:11:20 Time: (3) Message: (John) -> hi 
+2021/11/01 14:11:20 Time: (4) Message: (John) -> hi 
+2021/11/01 14:11:39 Time: (5) Message: (John) -> hi 
+2021/11/01 14:11:40 Time: (6) Message: (John) -> hello 
+2021/11/01 14:11:42 Time: (7) Message: (John) -> hello 
+2021/11/01 14:12:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49336->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:12:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49337->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:14:24 Time: (3) Message: (John) -> hi 
+2021/11/01 14:14:26 Time: (3) Message: (John) -> hi 
+2021/11/01 14:14:30 Time: (3) Message: (John) -> hi 
+2021/11/01 14:16:02 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49449->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:16:02 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49450->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:16:23 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:16:24 Time: (1) Message: (Erik) -> hi 
+2021/11/01 14:16:25 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:16:31 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:16:32 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:16:32 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:16:38 Time: (2) Message: (Erik) -> hello 
+2021/11/01 14:17:03 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49458->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:17:03 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49457->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:17:25 Time: (3) Message: (John) -> hi 
+2021/11/01 14:17:26 Time: (3) Message: (John) -> hi 
+2021/11/01 14:18:02 Time: (3) Message: (John) -> hi 
+2021/11/01 14:18:03 Time: (3) Message: (John) -> hi 
+2021/11/01 14:18:06 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:18:06 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:18:07 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:18:41 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49469->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:18:41 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49470->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:19:07 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:19:08 Time: (4) Message: (Erik) -> hi 
+2021/11/01 14:19:14 Time: (6) Message: (Erik) -> hi 
+2021/11/01 14:19:14 Time: (8) Message: (Erik) -> hi 
+2021/11/01 14:24:47 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49475->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:24:47 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49474->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:25:03 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:25:03 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:25:15 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:26:48 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49501->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:26:48 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49499->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:27:07 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:27:07 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:27:11 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:27:24 Time: (3) Message: (John) -> hi 
+2021/11/01 14:27:25 Time: (3) Message: (John) -> hi 
+2021/11/01 14:27:25 Time: (3) Message: (John) -> hi 
+2021/11/01 14:27:25 Time: (3) Message: (John) -> hi 
+2021/11/01 14:34:42 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49512->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:34:42 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:49513->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:34:58 Time: (1) Message: (Erik) -> hi 
+2021/11/01 14:34:59 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:34:59 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:35:10 Time: (4) Message: (Erik) -> hi 
+2021/11/01 14:35:10 Time: (5) Message: (Erik) -> hi 
+2021/11/01 14:35:11 Time: (6) Message: (Erik) -> hi 
+2021/11/01 14:35:14 Time: (1) Message: (John) -> gi 
+2021/11/01 14:35:14 Time: (2) Message: (John) -> gi 
+2021/11/01 14:35:15 Time: (3) Message: (John) -> hi 
+2021/11/01 14:36:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:53287->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:36:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:53288->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 14:37:21 Time: (1) Message: (Erik) -> hi 
+2021/11/01 14:37:22 Time: (2) Message: (Erik) -> hi 
+2021/11/01 14:37:27 Time: (1) Message: (John) -> hi 
+2021/11/01 14:37:28 Time: (2) Message: (John) -> hi 
+2021/11/01 14:37:42 Time: (3) Message: (John) -> hi 
+2021/11/01 14:37:43 Time: (4) Message: (John) -> hi 
+2021/11/01 14:37:43 Time: (5) Message: (John) -> hi 
+2021/11/01 14:37:44 Time: (6) Message: (John) -> hi 
+2021/11/01 14:37:44 Time: (7) Message: (John) -> hi 
+2021/11/01 14:37:45 Time: (8) Message: (John) -> hi 
+2021/11/01 14:37:45 Time: (9) Message: (John) -> h 
+2021/11/01 14:37:53 Time: (3) Message: (Erik) -> hi 
+2021/11/01 14:39:56 Time: (4) Message: (Erik) -> test 
+2021/11/01 15:02:25 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:53295->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:02:25 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:53294->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:02:44 Time: (3) Message: (John) -> hi 
+2021/11/01 15:02:46 Time: (3) Message: (John) -> lof 
+2021/11/01 15:02:47 Time: (3) Message: (John) -> aes 
+2021/11/01 15:02:53 Time: (3) Message: (John) -> fdafa 
+2021/11/01 15:03:40 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:54824->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:03:40 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:54826->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:04:00 Time: (1) Message: (Erik) -> hi 
+2021/11/01 15:04:00 Time: (2) Message: (Erik) -> hi 
+2021/11/01 15:04:07 Time: (3) Message: (Erik) -> hi 
+2021/11/01 15:04:07 Time: (4) Message: (Erik) -> hi 
+2021/11/01 15:04:08 Time: (5) Message: (Erik) -> hi 
+2021/11/01 15:04:08 Time: (6) Message: (Erik) -> hi 
+2021/11/01 15:04:09 Time: (7) Message: (Erik) -> hi 
+2021/11/01 15:04:09 Time: (8) Message: (Erik) -> hi 
+2021/11/01 15:04:18 Time: (1) Message: (John) -> yo 
+2021/11/01 15:11:26 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:54836->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:11:26 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:54837->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:20:17 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:54871->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:20:43 Time: (1) Message: (Erik) -> hi 
+2021/11/01 15:27:29 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:54901->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 15:33:23 Time: (1) Message: (ParticipantID) -> test message goes here 
+2021/11/01 15:33:28 Time: (1) Message: (ParticipantID) -> test message goes here 
+2021/11/01 15:37:01 Time: (2) Message: (Erik) -> hi 
+2021/11/01 16:02:21 Time: (3) Message: (Erik) -> hi 
+2021/11/01 16:02:22 Time: (4) Message: (Erik) -> hi 
+2021/11/01 16:02:22 Time: (5) Message: (Erik) -> hi 
+2021/11/01 16:02:22 Time: (6) Message: (Erik) -> hi 
+2021/11/01 16:02:46 Time: (2) Message: (John) -> hi 
+2021/11/01 16:07:01 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:55485->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/01 16:07:01 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:55484->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.

@@ -26,6 +26,17 @@ func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Comm
 
 	//Joining information is stored in the channel map.
 	s.channel[ch.Name] = append(s.channel[ch.Name], msgChannel)
+	log.Printf("Participant %v joined the chat at timestamp %d", ch.SendersID, serverlamtime)
+
+	/* 	joinMsg := chatpackage.ChatMessage{
+		Channel: &chatpackage.Channel{
+			Name:      "test",
+			SendersID: ch.SendersID},
+		Message:       "test message goes here",
+		ParticipantID: "ParticipantID",
+		LamTime:       int32(serverlamtime),
+	} */
+	//msgStream.Send(&joinMsg)
 
 	// keeping the stream open
 	for {
@@ -33,13 +44,13 @@ func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Comm
 		select {
 		//If the channel is closed, this case is chosen.
 		case <-msgStream.Context().Done():
-			log.Print(ch.SendersID + " " + "is gooone bby")
-			//msgStream.Send(&msg)
+			log.Printf("%v left the chat at timestamp %d", ch.SendersID, serverlamtime)
 			return nil
 		//If the server is running, messages are recieved through this channel.
 		case msg := <-msgChannel:
-			serverlamtime += int(msg.LamTime) + 1
-			msg.LamTime = int32(serverlamtime)
+			// client lamtime
+			msg.LamTime += 1
+			serverlamtime = int(msg.LamTime)
 			fmt.Printf("Recieved message: %v at timestamp %v \n", msg, serverlamtime)
 			msgStream.Send(msg)
 		}
