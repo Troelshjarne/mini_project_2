@@ -39,7 +39,7 @@ func main() {
 	go joinChannel(ctx, client)
 
 	scanner := bufio.NewScanner(os.Stdin)
-
+	// check for string length!!!!!
 	for scanner.Scan() {
 		go sendMessage(ctx, client, scanner.Text())
 	}
@@ -56,9 +56,27 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 
 	fmt.Printf("Joined channel: %v \n", *channelName)
 
+	LOG_FILE := "./log.txt"
+
+	logFile, err := os.OpenFile(LOG_FILE, os.O_APPEND|os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer logFile.Close()
+
+	mw := io.MultiWriter(os.Stdout, logFile)
+
+	log.SetOutput(mw)
+
+	// optional: log date-time, filename, and line number
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
+
+	log.Println("Logging to custom file")
+
 	waitChannel := make(chan struct{})
 
 	go func() {
+
 		for {
 
 			in, err := stream.Recv()
@@ -71,7 +89,8 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 			}
 
 			if *senderName != in.ParticipantID {
-				fmt.Printf("Message: (%v) -> %v \n", in.ParticipantID, in.Message)
+				// log message
+				log.Printf("Message: (%v) -> %v \n", in.ParticipantID, in.Message)
 			}
 
 		}
