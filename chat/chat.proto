@@ -7,7 +7,7 @@ message chatMessage {
    string message = 1;
    string participantID = 2;
    Channel channel = 3;
-   int32 vectorTime = 4;
+   int32 lamTime = 4;
 }
 
 message Channel {
