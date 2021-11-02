@@ -1,0 +1,14 @@
+2021/11/02 15:57:53 Time: (1) Message: (server) -> Participant Troels joined the chat at timestamp 1
+2021/11/02 15:57:56 Time: (2) Message: (server) -> Participant Viktor joined the chat at timestamp 2 
+2021/11/02 15:57:56 Time: (2) Message: (server) -> Participant Viktor joined the chat at timestamp 2 
+2021/11/02 15:57:59 Time: (3) Message: (server) -> Participant Philip joined the chat at timestamp 3 
+2021/11/02 15:57:59 Time: (3) Message: (server) -> Participant Philip joined the chat at timestamp 3 
+2021/11/02 15:57:59 Time: (3) Message: (server) -> Participant Philip joined the chat at timestamp 3 
+2021/11/02 15:58:18 Time: (4) Message: (Viktor) -> Hello all of you 
+2021/11/02 15:58:18 Time: (4) Message: (Viktor) -> Hello all of you 
+2021/11/02 15:58:23 (Viktor): Invalid message length. Must be at least 1 character long, and at most 128 characters long.
+2021/11/02 15:58:28 Time: (6) Message: (server) -> Philip left the chat at timestamp 6 
+2021/11/02 15:58:28 Time: (6) Message: (server) -> Philip left the chat at timestamp 6 
+2021/11/02 15:58:43 Time: (7) Message: (server) -> Participant Philip joined the chat at timestamp 7 
+2021/11/02 15:58:43 Time: (7) Message: (server) -> Participant Philip joined the chat at timestamp 7
+2021/11/02 15:58:43 Time: (7) Message: (server) -> Participant Philip joined the chat at timestamp 7 
