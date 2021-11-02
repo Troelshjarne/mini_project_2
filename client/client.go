@@ -3,10 +3,12 @@ package main
 import (
 	"bufio"
 	"context"
+	"crypto/rand"
 	"flag"
 	"fmt"
 	"io"
 	"log"
+	"math/big"
 	"os"
 
 	chatpackage "github.com/Troelshjarne/mini_project_2/chat"
@@ -41,9 +43,18 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	// check for string length!!!!!
 	for scanner.Scan() {
-		go sendMessage(ctx, client, scanner.Text(), int32(0))
+		text := scanner.Text()
+		if valid(text) {
+			go sendMessage(ctx, client, text, int32(0))
+		} else {
+			fmt.Println("Invalid message length. Must be at least 1 character long, and at most 128 characters long.")
+		}
 	}
 
+}
+
+func valid(input string) bool {
+	return !(len(input) == 0 || len(input) > 128)
 }
 
 func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
@@ -54,7 +65,7 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 		log.Fatalf("Client join channel error! Throws %v", err)
 	}
 
-	//fmt.Printf("Joined channel: %v \n", *channelName)
+	//Logging
 
 	LOG_FILE := "./log.txt"
 
@@ -96,10 +107,25 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 }
 
 func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
+
+	//Logging
+	LOG_FILE := "./log.txt"
+
+	logFile, err := os.OpenFile(LOG_FILE, os.O_APPEND|os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer logFile.Close()
+
+	mw := io.MultiWriter(os.Stdout, logFile)
+
+	log.SetOutput(mw)
+
 	stream, err := client.SendMessage(ctx)
 	if err != nil {
 		log.Printf("Fail sending message! Got error: %v", err)
 	}
+	randId, _ := rand.Int(rand.Reader, big.NewInt(8192*8192*8192*8192))
 	// include timestamp.
 	msg := chatpackage.ChatMessage{
 		Channel: &chatpackage.Channel{
@@ -108,6 +134,7 @@ func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, me
 		Message:       message,
 		ParticipantID: *senderName,
 		LamTime:       lamtime,
+		Id:            randId.Int64(),
 	}
 	stream.Send(&msg)
 

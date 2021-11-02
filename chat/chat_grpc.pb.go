@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommunicationClient interface {
-	// rename publish
+	//rename publish
 	JoinChannel(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_JoinChannelClient, error)
 	//rename broadcast
 	SendMessage(ctx context.Context, opts ...grpc.CallOption) (Communication_SendMessageClient, error)
@@ -102,7 +102,7 @@ func (x *communicationSendMessageClient) CloseAndRecv() (*MessageAck, error) {
 // All implementations must embed UnimplementedCommunicationServer
 // for forward compatibility
 type CommunicationServer interface {
-	// rename publish
+	//rename publish
 	JoinChannel(*Channel, Communication_JoinChannelServer) error
 	//rename broadcast
 	SendMessage(Communication_SendMessageServer) error
@@ -198,5 +198,91 @@ var Communication_ServiceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
+	Metadata: "chat/chat.proto",
+}
+
+// BroadcastClient is the client API for Broadcast service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type BroadcastClient interface {
+	SendStatus(ctx context.Context, in *ParticipantConnectionStatus, opts ...grpc.CallOption) (*MessageAck, error)
+}
+
+type broadcastClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewBroadcastClient(cc grpc.ClientConnInterface) BroadcastClient {
+	return &broadcastClient{cc}
+}
+
+func (c *broadcastClient) SendStatus(ctx context.Context, in *ParticipantConnectionStatus, opts ...grpc.CallOption) (*MessageAck, error) {
+	out := new(MessageAck)
+	err := c.cc.Invoke(ctx, "/chatpackage.Broadcast/sendStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// BroadcastServer is the server API for Broadcast service.
+// All implementations must embed UnimplementedBroadcastServer
+// for forward compatibility
+type BroadcastServer interface {
+	SendStatus(context.Context, *ParticipantConnectionStatus) (*MessageAck, error)
+	mustEmbedUnimplementedBroadcastServer()
+}
+
+// UnimplementedBroadcastServer must be embedded to have forward compatible implementations.
+type UnimplementedBroadcastServer struct {
+}
+
+func (UnimplementedBroadcastServer) SendStatus(context.Context, *ParticipantConnectionStatus) (*MessageAck, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendStatus not implemented")
+}
+func (UnimplementedBroadcastServer) mustEmbedUnimplementedBroadcastServer() {}
+
+// UnsafeBroadcastServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BroadcastServer will
+// result in compilation errors.
+type UnsafeBroadcastServer interface {
+	mustEmbedUnimplementedBroadcastServer()
+}
+
+func RegisterBroadcastServer(s grpc.ServiceRegistrar, srv BroadcastServer) {
+	s.RegisterService(&Broadcast_ServiceDesc, srv)
+}
+
+func _Broadcast_SendStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParticipantConnectionStatus)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BroadcastServer).SendStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatpackage.Broadcast/sendStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BroadcastServer).SendStatus(ctx, req.(*ParticipantConnectionStatus))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Broadcast_ServiceDesc is the grpc.ServiceDesc for Broadcast service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Broadcast_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "chatpackage.Broadcast",
+	HandlerType: (*BroadcastServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "sendStatus",
+			Handler:    _Broadcast_SendStatus_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "chat/chat.proto",
 }
