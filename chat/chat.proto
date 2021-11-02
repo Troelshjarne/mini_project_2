@@ -3,13 +3,42 @@ syntax = "proto3";
 package chatpackage;
 option go_package = "https://github.com/Troelshjarne/mini_project_2;chatpackage";
 
-message chatMessage {
-string message = 1;
-repeated int32 vectorTime = 2;
+
+message participantConnectionStatus {
+   string statusmessage = 1;
+   string userID = 2;
+   int32 statusLamtime = 3;
 }
 
 
+message chatMessage {
+   string message = 1;
+   string participantID = 2;
+   Channel channel = 3;
+   int32 lamTime = 4;
+   int64 id = 5;
+}
 
-service Publish{
-   rpc getMessage (stream chatMessage) returns (stream chatMessage);
+message Channel {
+   string name = 1;
+   string sendersID = 2;
+}
+
+message messageAck {
+   string status = 1;
+}
+
+
+service Communication{
+   //rename publish
+   rpc joinChannel(Channel) returns (stream chatMessage) {}
+   //rename broadcast
+   rpc sendMessage (stream chatMessage) returns (messageAck) {}
+}
+//
+
+
+
+service Broadcast{
+   rpc sendStatus(participantConnectionStatus) returns (messageAck) {}
 }

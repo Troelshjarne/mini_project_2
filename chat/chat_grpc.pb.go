@@ -14,45 +14,49 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// PublishClient is the client API for Publish service.
+// CommunicationClient is the client API for Communication service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PublishClient interface {
-	GetMessage(ctx context.Context, opts ...grpc.CallOption) (Publish_GetMessageClient, error)
+type CommunicationClient interface {
+	//rename publish
+	JoinChannel(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_JoinChannelClient, error)
+	//rename broadcast
+	SendMessage(ctx context.Context, opts ...grpc.CallOption) (Communication_SendMessageClient, error)
 }
 
-type publishClient struct {
+type communicationClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPublishClient(cc grpc.ClientConnInterface) PublishClient {
-	return &publishClient{cc}
+func NewCommunicationClient(cc grpc.ClientConnInterface) CommunicationClient {
+	return &communicationClient{cc}
 }
 
-func (c *publishClient) GetMessage(ctx context.Context, opts ...grpc.CallOption) (Publish_GetMessageClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Publish_ServiceDesc.Streams[0], "/chatpackage.Publish/getMessage", opts...)
+func (c *communicationClient) JoinChannel(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_JoinChannelClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Communication_ServiceDesc.Streams[0], "/chatpackage.Communication/joinChannel", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &publishGetMessageClient{stream}
+	x := &communicationJoinChannelClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
 	return x, nil
 }
 
-type Publish_GetMessageClient interface {
-	Send(*ChatMessage) error
+type Communication_JoinChannelClient interface {
 	Recv() (*ChatMessage, error)
 	grpc.ClientStream
 }
 
-type publishGetMessageClient struct {
+type communicationJoinChannelClient struct {
 	grpc.ClientStream
 }
 
-func (x *publishGetMessageClient) Send(m *ChatMessage) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *publishGetMessageClient) Recv() (*ChatMessage, error) {
+func (x *communicationJoinChannelClient) Recv() (*ChatMessage, error) {
 	m := new(ChatMessage)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -60,53 +64,114 @@ func (x *publishGetMessageClient) Recv() (*ChatMessage, error) {
 	return m, nil
 }
 
-// PublishServer is the server API for Publish service.
-// All implementations must embed UnimplementedPublishServer
-// for forward compatibility
-type PublishServer interface {
-	GetMessage(Publish_GetMessageServer) error
-	mustEmbedUnimplementedPublishServer()
+func (c *communicationClient) SendMessage(ctx context.Context, opts ...grpc.CallOption) (Communication_SendMessageClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Communication_ServiceDesc.Streams[1], "/chatpackage.Communication/sendMessage", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &communicationSendMessageClient{stream}
+	return x, nil
 }
 
-// UnimplementedPublishServer must be embedded to have forward compatible implementations.
-type UnimplementedPublishServer struct {
-}
-
-func (UnimplementedPublishServer) GetMessage(Publish_GetMessageServer) error {
-	return status.Errorf(codes.Unimplemented, "method GetMessage not implemented")
-}
-func (UnimplementedPublishServer) mustEmbedUnimplementedPublishServer() {}
-
-// UnsafePublishServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PublishServer will
-// result in compilation errors.
-type UnsafePublishServer interface {
-	mustEmbedUnimplementedPublishServer()
-}
-
-func RegisterPublishServer(s grpc.ServiceRegistrar, srv PublishServer) {
-	s.RegisterService(&Publish_ServiceDesc, srv)
-}
-
-func _Publish_GetMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PublishServer).GetMessage(&publishGetMessageServer{stream})
-}
-
-type Publish_GetMessageServer interface {
+type Communication_SendMessageClient interface {
 	Send(*ChatMessage) error
+	CloseAndRecv() (*MessageAck, error)
+	grpc.ClientStream
+}
+
+type communicationSendMessageClient struct {
+	grpc.ClientStream
+}
+
+func (x *communicationSendMessageClient) Send(m *ChatMessage) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *communicationSendMessageClient) CloseAndRecv() (*MessageAck, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(MessageAck)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// CommunicationServer is the server API for Communication service.
+// All implementations must embed UnimplementedCommunicationServer
+// for forward compatibility
+type CommunicationServer interface {
+	//rename publish
+	JoinChannel(*Channel, Communication_JoinChannelServer) error
+	//rename broadcast
+	SendMessage(Communication_SendMessageServer) error
+	mustEmbedUnimplementedCommunicationServer()
+}
+
+// UnimplementedCommunicationServer must be embedded to have forward compatible implementations.
+type UnimplementedCommunicationServer struct {
+}
+
+func (UnimplementedCommunicationServer) JoinChannel(*Channel, Communication_JoinChannelServer) error {
+	return status.Errorf(codes.Unimplemented, "method JoinChannel not implemented")
+}
+func (UnimplementedCommunicationServer) SendMessage(Communication_SendMessageServer) error {
+	return status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
+}
+func (UnimplementedCommunicationServer) mustEmbedUnimplementedCommunicationServer() {}
+
+// UnsafeCommunicationServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CommunicationServer will
+// result in compilation errors.
+type UnsafeCommunicationServer interface {
+	mustEmbedUnimplementedCommunicationServer()
+}
+
+func RegisterCommunicationServer(s grpc.ServiceRegistrar, srv CommunicationServer) {
+	s.RegisterService(&Communication_ServiceDesc, srv)
+}
+
+func _Communication_JoinChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(Channel)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(CommunicationServer).JoinChannel(m, &communicationJoinChannelServer{stream})
+}
+
+type Communication_JoinChannelServer interface {
+	Send(*ChatMessage) error
+	grpc.ServerStream
+}
+
+type communicationJoinChannelServer struct {
+	grpc.ServerStream
+}
+
+func (x *communicationJoinChannelServer) Send(m *ChatMessage) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Communication_SendMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(CommunicationServer).SendMessage(&communicationSendMessageServer{stream})
+}
+
+type Communication_SendMessageServer interface {
+	SendAndClose(*MessageAck) error
 	Recv() (*ChatMessage, error)
 	grpc.ServerStream
 }
 
-type publishGetMessageServer struct {
+type communicationSendMessageServer struct {
 	grpc.ServerStream
 }
 
-func (x *publishGetMessageServer) Send(m *ChatMessage) error {
+func (x *communicationSendMessageServer) SendAndClose(m *MessageAck) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *publishGetMessageServer) Recv() (*ChatMessage, error) {
+func (x *communicationSendMessageServer) Recv() (*ChatMessage, error) {
 	m := new(ChatMessage)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -114,20 +179,110 @@ func (x *publishGetMessageServer) Recv() (*ChatMessage, error) {
 	return m, nil
 }
 
-// Publish_ServiceDesc is the grpc.ServiceDesc for Publish service.
+// Communication_ServiceDesc is the grpc.ServiceDesc for Communication service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Publish_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chatpackage.Publish",
-	HandlerType: (*PublishServer)(nil),
+var Communication_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "chatpackage.Communication",
+	HandlerType: (*CommunicationServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "getMessage",
-			Handler:       _Publish_GetMessage_Handler,
+			StreamName:    "joinChannel",
+			Handler:       _Communication_JoinChannel_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "sendMessage",
+			Handler:       _Communication_SendMessage_Handler,
 			ClientStreams: true,
 		},
 	},
+	Metadata: "chat/chat.proto",
+}
+
+// BroadcastClient is the client API for Broadcast service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type BroadcastClient interface {
+	SendStatus(ctx context.Context, in *ParticipantConnectionStatus, opts ...grpc.CallOption) (*MessageAck, error)
+}
+
+type broadcastClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewBroadcastClient(cc grpc.ClientConnInterface) BroadcastClient {
+	return &broadcastClient{cc}
+}
+
+func (c *broadcastClient) SendStatus(ctx context.Context, in *ParticipantConnectionStatus, opts ...grpc.CallOption) (*MessageAck, error) {
+	out := new(MessageAck)
+	err := c.cc.Invoke(ctx, "/chatpackage.Broadcast/sendStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// BroadcastServer is the server API for Broadcast service.
+// All implementations must embed UnimplementedBroadcastServer
+// for forward compatibility
+type BroadcastServer interface {
+	SendStatus(context.Context, *ParticipantConnectionStatus) (*MessageAck, error)
+	mustEmbedUnimplementedBroadcastServer()
+}
+
+// UnimplementedBroadcastServer must be embedded to have forward compatible implementations.
+type UnimplementedBroadcastServer struct {
+}
+
+func (UnimplementedBroadcastServer) SendStatus(context.Context, *ParticipantConnectionStatus) (*MessageAck, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendStatus not implemented")
+}
+func (UnimplementedBroadcastServer) mustEmbedUnimplementedBroadcastServer() {}
+
+// UnsafeBroadcastServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BroadcastServer will
+// result in compilation errors.
+type UnsafeBroadcastServer interface {
+	mustEmbedUnimplementedBroadcastServer()
+}
+
+func RegisterBroadcastServer(s grpc.ServiceRegistrar, srv BroadcastServer) {
+	s.RegisterService(&Broadcast_ServiceDesc, srv)
+}
+
+func _Broadcast_SendStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParticipantConnectionStatus)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BroadcastServer).SendStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatpackage.Broadcast/sendStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BroadcastServer).SendStatus(ctx, req.(*ParticipantConnectionStatus))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Broadcast_ServiceDesc is the grpc.ServiceDesc for Broadcast service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Broadcast_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "chatpackage.Broadcast",
+	HandlerType: (*BroadcastServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "sendStatus",
+			Handler:    _Broadcast_SendStatus_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "chat/chat.proto",
 }
