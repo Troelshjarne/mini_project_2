@@ -40,14 +40,27 @@ func main() {
 
 	go joinChannel(ctx, client)
 
+	//Logging
+
+	LOG_FILE := "./log.txt"
+
+	logFile, err := os.OpenFile(LOG_FILE, os.O_APPEND|os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer logFile.Close()
+
+	mw := io.MultiWriter(os.Stdout, logFile)
+
+	log.SetOutput(mw)
+
 	scanner := bufio.NewScanner(os.Stdin)
-	// check for string length!!!!!
 	for scanner.Scan() {
 		text := scanner.Text()
 		if valid(text) {
 			go sendMessage(ctx, client, text, int32(0))
 		} else {
-			fmt.Println("Invalid message length. Must be at least 1 character long, and at most 128 characters long.")
+			log.Printf("(%v): Invalid message length. Must be at least 1 character long, and at most 128 characters long.", *senderName)
 		}
 	}
 
@@ -107,19 +120,6 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 }
 
 func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
-
-	//Logging
-	LOG_FILE := "./log.txt"
-
-	logFile, err := os.OpenFile(LOG_FILE, os.O_APPEND|os.O_RDWR|os.O_CREATE, 0644)
-	if err != nil {
-		log.Panic(err)
-	}
-	defer logFile.Close()
-
-	mw := io.MultiWriter(os.Stdout, logFile)
-
-	log.SetOutput(mw)
 
 	stream, err := client.SendMessage(ctx)
 	if err != nil {

@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-var serverlamtime = 0
+var serverlamtime = 1
 var msgIds []int
 var idMutex sync.Mutex
 
