@@ -44,7 +44,17 @@ func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Comm
 		select {
 		//If the channel is closed, this case is chosen.
 		case <-msgStream.Context().Done():
-			log.Printf("%v left the chat at timestamp %d", ch.SendersID, serverlamtime)
+			body := fmt.Sprintf("%v left the chat at timestamp %d", ch.SendersID, serverlamtime)
+			log.Print(body)
+			msg := chatpackage.ChatMessage{
+				Channel: &chatpackage.Channel{
+					Name:      "server",
+					SendersID: "server"},
+				Message:       body,
+				ParticipantID: "server",
+				LamTime:       int32(serverlamtime),
+			}
+			msgStream.Send(&msg)
 			return nil
 		//If the server is running, messages are recieved through this channel.
 		case msg := <-msgChannel:
@@ -78,6 +88,7 @@ func (s *Server) SendMessage(msgStream chatpackage.Communication_SendMessageServ
 	//Function to loop over the channel to send incoming messages
 	go func() {
 		streams := s.channel[msg.Channel.Name]
+		msg.LamTime = int32(serverlamtime)
 		for _, msgChan := range streams {
 			msgChan <- msg
 		}

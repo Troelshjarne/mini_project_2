@@ -14,7 +14,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-var lamTime = 0
 var channelName = flag.String("channel", "default", "Channel name for chatting")
 var senderName = flag.String("sender", "default", "Senders name")
 var tcpServer = flag.String("server", ":9080", "Tcp server")
@@ -42,7 +41,7 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	// check for string length!!!!!
 	for scanner.Scan() {
-		go sendMessage(ctx, client, scanner.Text(), int32(lamTime))
+		go sendMessage(ctx, client, scanner.Text(), int32(0))
 	}
 
 }
@@ -86,10 +85,7 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 
 			if *senderName != in.ParticipantID {
 
-				lamTime += 1
-				in.LamTime = int32(lamTime)
-
-				log.Printf("Time: (%v) Message: (%v) -> %v \n", lamTime, in.ParticipantID, in.Message)
+				log.Printf("Time: (%v) Message: (%v) -> %v \n", in.LamTime, in.ParticipantID, in.Message)
 			}
 
 		}

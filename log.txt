@@ -222,3 +222,57 @@
  Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:55485->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
 2021/11/01 16:07:01 Failed to recieve message from channel joining. 
  Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:55484->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/02 09:59:57 Time: (1) Message: (tdawg) -> hello 
+2021/11/02 10:05:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:05:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:06:05 Time: (1) Message: (tdawg) -> hi 
+2021/11/02 10:06:16 Time: (1) Message: (John) -> hi 
+2021/11/02 10:06:22 Time: (2) Message: (tdawg) -> hi 
+2021/11/02 10:06:35 Time: (3) Message: (tdawg) -> hi 
+2021/11/02 10:06:40 Time: (2) Message: (John) -> hi 
+2021/11/02 10:10:10 Time: (4) Message: (hhh) -> hi 
+2021/11/02 10:10:10 Time: (3) Message: (hhh) -> hi 
+2021/11/02 10:10:23 Time: (5) Message: (hhh) -> hi 
+2021/11/02 10:10:23 Time: (4) Message: (hhh) -> hi 
+2021/11/02 10:10:29 Time: (1) Message: (tdawg) -> hi 
+2021/11/02 10:10:29 Time: (6) Message: (tdawg) -> hi 
+2021/11/02 10:13:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:13:56 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:14:19 Time: (1) Message: (tdawg) -> hello 
+2021/11/02 10:14:50 Time: (2) Message: (hhh) -> hi 
+2021/11/02 10:14:50 Time: (1) Message: (hhh) -> hi 
+2021/11/02 10:14:51 Time: (2) Message: (hhh) -> hi 
+2021/11/02 10:14:51 Time: (3) Message: (hhh) -> hi 
+2021/11/02 10:14:52 Time: (3) Message: (hhh) -> hi 
+2021/11/02 10:14:52 Time: (4) Message: (hhh) -> hi 
+2021/11/02 10:15:33 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:15:33 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:15:33 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:15:54 Time: (1) Message: (tdawg) -> hi 
+2021/11/02 10:16:09 Time: (1) Message: (John) -> hi 
+2021/11/02 10:16:54 Time: (2) Message: (John) -> hi 
+2021/11/02 10:16:54 Time: (3) Message: (John) -> hi 
+2021/11/02 10:17:03 Time: (2) Message: (tdawg) -> hi 
+2021/11/02 10:17:44 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:17:44 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:17:59 Time: (0) Message: (tdawg) -> gi 
+2021/11/02 10:18:12 Time: (0) Message: (John) -> hi 
+2021/11/02 10:22:44 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:22:44 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:23:28 Time: (3) Message: (John) -> hi 
+2021/11/02 10:23:39 Time: (5) Message: (tdawg) -> hello 
+2021/11/02 10:24:27 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: EOF
+2021/11/02 10:24:38 Time: (2) Message: (tdawg) -> hi 
+2021/11/02 10:24:52 Time: (4) Message: (tdawg) -> hi 

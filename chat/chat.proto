@@ -34,6 +34,9 @@ service Communication{
    //rename broadcast
    rpc sendMessage (stream chatMessage) returns (messageAck) {}
 }
+//
+
+
 
 service Broadcast{
    rpc sendStatus(participantConnectionStatus) returns (messageAck) {}
