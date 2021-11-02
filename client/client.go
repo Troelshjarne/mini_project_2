@@ -54,7 +54,7 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 		log.Fatalf("Client join channel error! Throws %v", err)
 	}
 
-	fmt.Printf("Joined channel: %v \n", *channelName)
+	//fmt.Printf("Joined channel: %v \n", *channelName)
 
 	LOG_FILE := "./log.txt"
 

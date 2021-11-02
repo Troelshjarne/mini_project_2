@@ -43,18 +43,21 @@ func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Comm
 
 		select {
 		//If the channel is closed, this case is chosen.
-		case <-msgStream.Context().Done():
+		case /*msg := */ <-msgStream.Context().Done():
 			body := fmt.Sprintf("%v left the chat at timestamp %d", ch.SendersID, serverlamtime)
 			log.Print(body)
 			msg := chatpackage.ChatMessage{
 				Channel: &chatpackage.Channel{
-					Name:      "server",
-					SendersID: "server"},
+					Name:      ch.Name,
+					SendersID: ch.SendersID},
 				Message:       body,
 				ParticipantID: "server",
 				LamTime:       int32(serverlamtime),
 			}
 			msgStream.Send(&msg)
+			fmt.Println("disconnected"+ch.SendersID, serverlamtime)
+			serverlamtime++
+
 			return nil
 		//If the server is running, messages are recieved through this channel.
 		case msg := <-msgChannel:
