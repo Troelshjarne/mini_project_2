@@ -36,3 +36,11 @@
 2021/11/03 16:04:01 Time: (3) Message: (Magnus) -> Hej Asger 
 2021/11/03 16:04:15 Time: (5) Message: (Asger) -> Asger er her ikke lige nu... 
 2021/11/03 16:06:49 Time: (7) Message: (server) -> Asger left the chat at timestamp 7 
+2021/11/03 21:09:39 Time: (1) Message: (server) -> Participant Hans joined the chat at timestamp 1 
+2021/11/03 21:09:53 Time: (2) Message: (server) -> Participant Kim joined the chat at timestamp 2 
+2021/11/03 21:09:53 Time: (2) Message: (server) -> Participant Kim joined the chat at timestamp 2 
+2021/11/03 21:10:13 Time: (3) Message: (server) -> Participant Gustav joined the chat at timestamp 3 
+2021/11/03 21:10:13 Time: (3) Message: (server) -> Participant Gustav joined the chat at timestamp 3 
+2021/11/03 21:10:13 Time: (3) Message: (server) -> Participant Gustav joined the chat at timestamp 3 
+2021/11/03 21:10:20 Time: (4) Message: (Kim) -> Hej Gustav! 
+2021/11/03 21:10:20 Time: (4) Message: (Kim) -> Hej Gustav! 

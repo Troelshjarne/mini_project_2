@@ -41,7 +41,7 @@ func main() {
 	// client connection interface
 	client := chatpackage.NewCommunicationClient(conn)
 
-	go publish(ctx, client)
+	go broadcast(ctx, client)
 
 	//Logging
 
@@ -61,7 +61,7 @@ func main() {
 	for scanner.Scan() {
 		text := scanner.Text()
 		if valid(text) {
-			go broadcast(ctx, client, text, int32(0))
+			go publish(ctx, client, text, int32(0))
 		} else {
 			log.Printf("(%v): Invalid message length. Must be at least 1 character long, and at most 128 characters long.", *senderName)
 		}
@@ -75,10 +75,10 @@ func valid(input string) bool {
 }
 
 // rpc call -> client sends message to server
-func publish(ctx context.Context, client chatpackage.CommunicationClient) {
+func broadcast(ctx context.Context, client chatpackage.CommunicationClient) {
 
 	channel := chatpackage.Channel{Name: *channelName, SendersID: *senderName}
-	stream, err := client.Publish(ctx, &channel)
+	stream, err := client.Broadcast(ctx, &channel)
 	if err != nil {
 		log.Fatalf("Client join channel error! Throws %v", err)
 	}
@@ -125,9 +125,9 @@ func publish(ctx context.Context, client chatpackage.CommunicationClient) {
 }
 
 // rpc call -> reads the messages broad by the server
-func broadcast(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
+func publish(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
 
-	stream, err := client.Broadcast(ctx)
+	stream, err := client.Publish(ctx)
 	if err != nil {
 		log.Printf("Failure sending message! Got error: %v", err)
 	}

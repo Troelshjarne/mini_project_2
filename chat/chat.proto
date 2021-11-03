@@ -24,7 +24,7 @@ message messageAck {
 
 service Communication{
    
-   rpc publish(Channel) returns (stream chatMessage) {}
+   rpc broadcast(Channel) returns (stream chatMessage) {}
    
-   rpc broadcast(stream chatMessage) returns (messageAck) {}
+   rpc publish(stream chatMessage) returns (messageAck) {}
 }

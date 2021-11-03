@@ -74,7 +74,7 @@ func ServerBroadcast(s *Server, messageBody string) {
 	}()
 }
 
-func (s *Server) Publish(ch *chatpackage.Channel, msgStream chatpackage.Communication_PublishServer) error {
+func (s *Server) Broadcast(ch *chatpackage.Channel, msgStream chatpackage.Communication_BroadcastServer) error {
 
 	msgChannel := make(chan *chatpackage.ChatMessage)
 
@@ -127,7 +127,7 @@ func (s *Server) Publish(ch *chatpackage.Channel, msgStream chatpackage.Communic
 
 }
 
-func (s *Server) Broadcast(msgStream chatpackage.Communication_BroadcastServer) error {
+func (s *Server) Publish(msgStream chatpackage.Communication_PublishServer) error {
 
 	//Used for recieving messages
 	msg, err := msgStream.Recv()
