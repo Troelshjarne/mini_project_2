@@ -23,8 +23,8 @@ message messageAck {
 
 
 service Communication{
-   //rename publish
+   
    rpc publish(Channel) returns (stream chatMessage) {}
-   //rename broadcast
+   
    rpc broadcast(stream chatMessage) returns (messageAck) {}
 }

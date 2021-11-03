@@ -16,6 +16,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+// commandline input stored in flags
 var channelName = flag.String("channel", "default", "Channel name for chatting")
 var senderName = flag.String("sender", "default", "Senders name")
 var tcpServer = flag.String("server", ":9080", "Tcp server")
@@ -27,7 +28,7 @@ func main() {
 	fmt.Println("=== Welcome to Chitty Chat - Beta 0.1.2 ===")
 	var options []grpc.DialOption
 	options = append(options, grpc.WithBlock(), grpc.WithInsecure())
-
+	//connect to server
 	conn, err := grpc.Dial(*tcpServer, options...)
 	if err != nil {
 		log.Fatalf("Failed to dial: %v", err)
@@ -36,6 +37,8 @@ func main() {
 	defer conn.Close()
 
 	ctx := context.Background()
+
+	// client connection interface
 	client := chatpackage.NewCommunicationClient(conn)
 
 	go publish(ctx, client)
@@ -66,10 +69,12 @@ func main() {
 
 }
 
+// validates length og client message
 func valid(input string) bool {
 	return !(len(input) == 0 || len(input) > 128)
 }
 
+// rpc call -> client sends message to server
 func publish(ctx context.Context, client chatpackage.CommunicationClient) {
 
 	channel := chatpackage.Channel{Name: *channelName, SendersID: *senderName}
@@ -119,12 +124,15 @@ func publish(ctx context.Context, client chatpackage.CommunicationClient) {
 
 }
 
+// rpc call -> reads the messages broad by the server
 func broadcast(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
 
 	stream, err := client.Broadcast(ctx)
 	if err != nil {
 		log.Printf("Failure sending message! Got error: %v", err)
 	}
+
+	// generates a 'random' 64-bit int, gives a message an unique ID -> used as bugfix, since a message initally was broadcasted n (client) times.
 	randId, _ := rand.Int(rand.Reader, big.NewInt(8192*8192*8192*8192))
 	//Include timestamp.
 	msg := chatpackage.ChatMessage{
