@@ -132,7 +132,9 @@ func broadcast(ctx context.Context, client chatpackage.CommunicationClient, mess
 		log.Printf("Failure sending message! Got error: %v", err)
 	}
 
-	// generates a 'random' 64-bit int, gives a message an unique ID -> used as bugfix, since a message initally was broadcasted n (client) times.
+	/* generates a 'random' 64-bit int cryptographically secure random number in a range.
+	   Gives a message an unique ID -> used as bugfix, since a message initally was broadcasted n (client) times.
+	*/
 	randId, _ := rand.Int(rand.Reader, big.NewInt(8192*8192*8192*8192))
 	//Include timestamp.
 	msg := chatpackage.ChatMessage{
