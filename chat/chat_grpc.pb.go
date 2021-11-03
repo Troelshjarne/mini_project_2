@@ -18,9 +18,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommunicationClient interface {
-	//rename publish
 	Publish(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_PublishClient, error)
-	//rename broadcast
+
 	Broadcast(ctx context.Context, opts ...grpc.CallOption) (Communication_BroadcastClient, error)
 }
 
