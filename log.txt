@@ -11,4 +11,28 @@
 2021/11/02 15:58:28 Time: (6) Message: (server) -> Philip left the chat at timestamp 6 
 2021/11/02 15:58:43 Time: (7) Message: (server) -> Participant Philip joined the chat at timestamp 7 
 2021/11/02 15:58:43 Time: (7) Message: (server) -> Participant Philip joined the chat at timestamp 7
-2021/11/02 15:58:43 Time: (7) Message: (server) -> Participant Philip joined the chat at timestamp 7 
+2021/11/02 15:58:43 Time: (7) Message: (server) -> Participant Philip joined the chat at timestamp 7 2021/11/03 15:58:33 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unimplemented desc = method Publish not implemented
+2021/11/03 15:58:49 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unimplemented desc = method Publish not implemented
+2021/11/03 16:00:31 Time: (1) Message: (server) -> Participant Magnus joined the chat at timestamp 1 
+2021/11/03 16:01:27 Time: (2) Message: (server) -> Participant Asger joined the chat at timestamp 2 
+2021/11/03 16:01:27 Time: (2) Message: (server) -> Participant Asger joined the chat at timestamp 2 
+2021/11/03 16:01:33 Time: (3) Message: (server) -> Magnus left the chat at timestamp 3 
+2021/11/03 16:01:54 Time: (5) Message: (server) -> Participant Asger joined the chat at timestamp 5 
+2021/11/03 16:02:21 Time: (6) Message: (server) -> Participant Asger joined the chat at timestamp 6 
+2021/11/03 16:02:21 Time: (6) Message: (server) -> Participant Asger joined the chat at timestamp 6 
+2021/11/03 16:02:24 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:60206->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/03 16:02:24 Failed to recieve message from channel joining. 
+ Got error: rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:60208->127.0.0.1:9080: wsarecv: An existing connection was forcibly closed by the remote host.
+2021/11/03 16:02:52 Time: (1) Message: (server) -> Participant Asger joined the chat at timestamp 1 
+2021/11/03 16:03:24 Time: (2) Message: (server) -> Participant Asger joined the chat at timestamp 2 
+2021/11/03 16:03:24 Time: (2) Message: (server) -> Participant Asger joined the chat at timestamp 2 
+2021/11/03 16:03:29 Time: (3) Message: (server) -> Asger left the chat at timestamp 3 
+2021/11/03 16:03:47 Time: (1) Message: (server) -> Participant Magnus joined the chat at timestamp 1 
+2021/11/03 16:03:52 Time: (2) Message: (server) -> Participant Asger joined the chat at timestamp 2 
+2021/11/03 16:03:52 Time: (2) Message: (server) -> Participant Asger joined the chat at timestamp 2 
+2021/11/03 16:04:01 Time: (3) Message: (Magnus) -> Hej Asger 
+2021/11/03 16:04:15 Time: (5) Message: (Asger) -> Asger er her ikke lige nu... 
+2021/11/03 16:06:49 Time: (7) Message: (server) -> Asger left the chat at timestamp 7 

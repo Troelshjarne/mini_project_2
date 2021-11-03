@@ -68,7 +68,7 @@ func ServerBroadcast(s *Server, messageBody string) {
 	}()
 }
 
-func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Communication_JoinChannelServer) error {
+func (s *Server) Publish(ch *chatpackage.Channel, msgStream chatpackage.Communication_PublishServer) error {
 
 	msgChannel := make(chan *chatpackage.ChatMessage)
 
@@ -121,7 +121,7 @@ func (s *Server) JoinChannel(ch *chatpackage.Channel, msgStream chatpackage.Comm
 
 }
 
-func (s *Server) SendMessage(msgStream chatpackage.Communication_SendMessageServer) error {
+func (s *Server) Broadcast(msgStream chatpackage.Communication_BroadcastServer) error {
 
 	//Used for recieving messages
 	msg, err := msgStream.Recv()

@@ -19,9 +19,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommunicationClient interface {
 	//rename publish
-	JoinChannel(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_JoinChannelClient, error)
+	Publish(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_PublishClient, error)
 	//rename broadcast
-	SendMessage(ctx context.Context, opts ...grpc.CallOption) (Communication_SendMessageClient, error)
+	Broadcast(ctx context.Context, opts ...grpc.CallOption) (Communication_BroadcastClient, error)
 }
 
 type communicationClient struct {
@@ -32,12 +32,12 @@ func NewCommunicationClient(cc grpc.ClientConnInterface) CommunicationClient {
 	return &communicationClient{cc}
 }
 
-func (c *communicationClient) JoinChannel(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_JoinChannelClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Communication_ServiceDesc.Streams[0], "/chatpackage.Communication/joinChannel", opts...)
+func (c *communicationClient) Publish(ctx context.Context, in *Channel, opts ...grpc.CallOption) (Communication_PublishClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Communication_ServiceDesc.Streams[0], "/chatpackage.Communication/publish", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &communicationJoinChannelClient{stream}
+	x := &communicationPublishClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -47,16 +47,16 @@ func (c *communicationClient) JoinChannel(ctx context.Context, in *Channel, opts
 	return x, nil
 }
 
-type Communication_JoinChannelClient interface {
+type Communication_PublishClient interface {
 	Recv() (*ChatMessage, error)
 	grpc.ClientStream
 }
 
-type communicationJoinChannelClient struct {
+type communicationPublishClient struct {
 	grpc.ClientStream
 }
 
-func (x *communicationJoinChannelClient) Recv() (*ChatMessage, error) {
+func (x *communicationPublishClient) Recv() (*ChatMessage, error) {
 	m := new(ChatMessage)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -64,30 +64,30 @@ func (x *communicationJoinChannelClient) Recv() (*ChatMessage, error) {
 	return m, nil
 }
 
-func (c *communicationClient) SendMessage(ctx context.Context, opts ...grpc.CallOption) (Communication_SendMessageClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Communication_ServiceDesc.Streams[1], "/chatpackage.Communication/sendMessage", opts...)
+func (c *communicationClient) Broadcast(ctx context.Context, opts ...grpc.CallOption) (Communication_BroadcastClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Communication_ServiceDesc.Streams[1], "/chatpackage.Communication/broadcast", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &communicationSendMessageClient{stream}
+	x := &communicationBroadcastClient{stream}
 	return x, nil
 }
 
-type Communication_SendMessageClient interface {
+type Communication_BroadcastClient interface {
 	Send(*ChatMessage) error
 	CloseAndRecv() (*MessageAck, error)
 	grpc.ClientStream
 }
 
-type communicationSendMessageClient struct {
+type communicationBroadcastClient struct {
 	grpc.ClientStream
 }
 
-func (x *communicationSendMessageClient) Send(m *ChatMessage) error {
+func (x *communicationBroadcastClient) Send(m *ChatMessage) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *communicationSendMessageClient) CloseAndRecv() (*MessageAck, error) {
+func (x *communicationBroadcastClient) CloseAndRecv() (*MessageAck, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -103,9 +103,9 @@ func (x *communicationSendMessageClient) CloseAndRecv() (*MessageAck, error) {
 // for forward compatibility
 type CommunicationServer interface {
 	//rename publish
-	JoinChannel(*Channel, Communication_JoinChannelServer) error
+	Publish(*Channel, Communication_PublishServer) error
 	//rename broadcast
-	SendMessage(Communication_SendMessageServer) error
+	Broadcast(Communication_BroadcastServer) error
 	mustEmbedUnimplementedCommunicationServer()
 }
 
@@ -113,11 +113,11 @@ type CommunicationServer interface {
 type UnimplementedCommunicationServer struct {
 }
 
-func (UnimplementedCommunicationServer) JoinChannel(*Channel, Communication_JoinChannelServer) error {
-	return status.Errorf(codes.Unimplemented, "method JoinChannel not implemented")
+func (UnimplementedCommunicationServer) Publish(*Channel, Communication_PublishServer) error {
+	return status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
-func (UnimplementedCommunicationServer) SendMessage(Communication_SendMessageServer) error {
-	return status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
+func (UnimplementedCommunicationServer) Broadcast(Communication_BroadcastServer) error {
+	return status.Errorf(codes.Unimplemented, "method Broadcast not implemented")
 }
 func (UnimplementedCommunicationServer) mustEmbedUnimplementedCommunicationServer() {}
 
@@ -132,46 +132,46 @@ func RegisterCommunicationServer(s grpc.ServiceRegistrar, srv CommunicationServe
 	s.RegisterService(&Communication_ServiceDesc, srv)
 }
 
-func _Communication_JoinChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _Communication_Publish_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(Channel)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(CommunicationServer).JoinChannel(m, &communicationJoinChannelServer{stream})
+	return srv.(CommunicationServer).Publish(m, &communicationPublishServer{stream})
 }
 
-type Communication_JoinChannelServer interface {
+type Communication_PublishServer interface {
 	Send(*ChatMessage) error
 	grpc.ServerStream
 }
 
-type communicationJoinChannelServer struct {
+type communicationPublishServer struct {
 	grpc.ServerStream
 }
 
-func (x *communicationJoinChannelServer) Send(m *ChatMessage) error {
+func (x *communicationPublishServer) Send(m *ChatMessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _Communication_SendMessage_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(CommunicationServer).SendMessage(&communicationSendMessageServer{stream})
+func _Communication_Broadcast_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(CommunicationServer).Broadcast(&communicationBroadcastServer{stream})
 }
 
-type Communication_SendMessageServer interface {
+type Communication_BroadcastServer interface {
 	SendAndClose(*MessageAck) error
 	Recv() (*ChatMessage, error)
 	grpc.ServerStream
 }
 
-type communicationSendMessageServer struct {
+type communicationBroadcastServer struct {
 	grpc.ServerStream
 }
 
-func (x *communicationSendMessageServer) SendAndClose(m *MessageAck) error {
+func (x *communicationBroadcastServer) SendAndClose(m *MessageAck) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *communicationSendMessageServer) Recv() (*ChatMessage, error) {
+func (x *communicationBroadcastServer) Recv() (*ChatMessage, error) {
 	m := new(ChatMessage)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -188,13 +188,13 @@ var Communication_ServiceDesc = grpc.ServiceDesc{
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "joinChannel",
-			Handler:       _Communication_JoinChannel_Handler,
+			StreamName:    "publish",
+			Handler:       _Communication_Publish_Handler,
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "sendMessage",
-			Handler:       _Communication_SendMessage_Handler,
+			StreamName:    "broadcast",
+			Handler:       _Communication_Broadcast_Handler,
 			ClientStreams: true,
 		},
 	},

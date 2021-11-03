@@ -38,7 +38,7 @@ func main() {
 	ctx := context.Background()
 	client := chatpackage.NewCommunicationClient(conn)
 
-	go joinChannel(ctx, client)
+	go publish(ctx, client)
 
 	//Logging
 
@@ -58,7 +58,7 @@ func main() {
 	for scanner.Scan() {
 		text := scanner.Text()
 		if valid(text) {
-			go sendMessage(ctx, client, text, int32(0))
+			go broadcast(ctx, client, text, int32(0))
 		} else {
 			log.Printf("(%v): Invalid message length. Must be at least 1 character long, and at most 128 characters long.", *senderName)
 		}
@@ -70,10 +70,10 @@ func valid(input string) bool {
 	return !(len(input) == 0 || len(input) > 128)
 }
 
-func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
+func publish(ctx context.Context, client chatpackage.CommunicationClient) {
 
 	channel := chatpackage.Channel{Name: *channelName, SendersID: *senderName}
-	stream, err := client.JoinChannel(ctx, &channel)
+	stream, err := client.Publish(ctx, &channel)
 	if err != nil {
 		log.Fatalf("Client join channel error! Throws %v", err)
 	}
@@ -119,14 +119,14 @@ func joinChannel(ctx context.Context, client chatpackage.CommunicationClient) {
 
 }
 
-func sendMessage(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
+func broadcast(ctx context.Context, client chatpackage.CommunicationClient, message string, lamtime int32) {
 
-	stream, err := client.SendMessage(ctx)
+	stream, err := client.Broadcast(ctx)
 	if err != nil {
-		log.Printf("Fail sending message! Got error: %v", err)
+		log.Printf("Failure sending message! Got error: %v", err)
 	}
 	randId, _ := rand.Int(rand.Reader, big.NewInt(8192*8192*8192*8192))
-	// include timestamp.
+	//Include timestamp.
 	msg := chatpackage.ChatMessage{
 		Channel: &chatpackage.Channel{
 			Name:      *channelName,
