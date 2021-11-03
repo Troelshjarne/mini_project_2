@@ -13,6 +13,8 @@ import (
 )
 
 var serverlamtime = 1
+
+// contains all unique message id's
 var msgIds []int
 var idMutex sync.Mutex
 
@@ -23,6 +25,7 @@ type Server struct {
 	channel map[string][]chan *chatpackage.ChatMessage
 }
 
+// helper method -> checks if msg already exists
 func containsID(id int) bool {
 	for _, val := range msgIds {
 		if val == id {
@@ -32,6 +35,7 @@ func containsID(id int) bool {
 	return id == 0
 }
 
+// helper method -> add id.
 func addId(id int) {
 	if len(msgIds) > 20 {
 		msgIds = msgIds[1:]
@@ -39,6 +43,7 @@ func addId(id int) {
 	msgIds = append(msgIds, id)
 }
 
+// close channel when client leaves.
 func removeChannel(s *Server, ch chan *chatpackage.ChatMessage) {
 	for key, val := range s.channel {
 		for j := 0; j < len(val); j++ {
@@ -50,6 +55,7 @@ func removeChannel(s *Server, ch chan *chatpackage.ChatMessage) {
 	}
 }
 
+// sends messages to all connected clients.
 func ServerBroadcast(s *Server, messageBody string) {
 	go func() {
 		for _, streams := range s.channel {
